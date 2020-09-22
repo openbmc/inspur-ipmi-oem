@@ -1,5 +1,7 @@
 src_inc = include_directories('.')
 
+so_version = '0.1.0'
+
 shared_library(
   'inspur-ipmi-oem',
   'inspur_oem.cpp',
@@ -8,6 +10,7 @@ shared_library(
     phosphor_logging,
     libipmid,
   ],
+  version: so_version,
   install: true,
   install_dir: get_option('libdir') / 'ipmid-providers'
   )
