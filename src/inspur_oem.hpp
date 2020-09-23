@@ -1,5 +1,10 @@
 #pragma once
+#include <array>
 #include <cstdint>
+#include <string_view>
+
+namespace inspur
+{
 
 enum ipmi_inspur_net_fns
 {
@@ -23,3 +28,21 @@ struct AssetInfoHeader
     uint8_t allInfoDone;
     uint16_t totalMessageLen;
 } __attribute__((packed));
+
+enum class bios_version_devname
+{
+    BIOS = 0,
+    ME = 1,
+    IE = 2,
+    PCH = 3,
+    BOARD = 4,
+    MRC = 5,
+    CUSTOM_ID = 6,
+    PCH_STEPPING = 7,
+};
+
+constexpr std::array<std::string_view, 8> bios_devname{
+    "BIOS", "ME", "IE", "PCH", "BOARD", "MRC", "CUSTOM_ID", "PCH_STEPPING",
+};
+
+} // namespace inspur
