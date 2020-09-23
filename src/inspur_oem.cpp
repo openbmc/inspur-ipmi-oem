@@ -7,12 +7,28 @@
 
 #include <optional>
 
+namespace
+{
+constexpr auto FIRMWARE_TYPE_OFFSET = 0;
+constexpr auto FIRMWARE_TYPE_SIZE = 1;
+constexpr auto FIRMWARE_VERSION_OFFSET =
+    FIRMWARE_TYPE_OFFSET + FIRMWARE_TYPE_SIZE;
+constexpr auto FIRMWARE_VERSION_SIZE = 15;
+constexpr auto FIRMWARE_BUILDTIME_OFFSET =
+    FIRMWARE_VERSION_OFFSET + FIRMWARE_VERSION_SIZE;
+constexpr auto FIRMWARE_BUILDTIME_SIZE = 20;
+
+static_assert(FIRMWARE_VERSION_OFFSET == 1);
+static_assert(FIRMWARE_BUILDTIME_OFFSET == 16);
+} // namespace
+
 namespace ipmi
 {
 
 #define UNUSED(x) (void)(x)
 
 using namespace phosphor::logging;
+using namespace inspur;
 
 static void registerOEMFunctions() __attribute__((constructor));
 sdbusplus::bus::bus bus(ipmid_get_sd_bus_connection());
@@ -94,8 +110,26 @@ std::optional<ParsedAssetInfo> parseAssetInfo(const AssetInfoHeader* h)
     info.data.resize(dataLen);
     memcpy(info.data.data(), p, dataLen);
 
-    dumpAssetInfo(info);
+    //    dumpAssetInfo(info);
     return info;
+}
+
+void parseBIOSInfo(const std::vector<uint8_t>& data)
+{
+    bios_version_devname dev = static_cast<bios_version_devname>(data[0]);
+    std::string version{data.data() + FIRMWARE_VERSION_OFFSET,
+                        data.data() + FIRMWARE_VERSION_SIZE};
+    std::string buildTime;
+    if (dev == bios_version_devname::BIOS)
+    {
+        buildTime.assign(reinterpret_cast<const char*>(
+                             data.data() + FIRMWARE_BUILDTIME_OFFSET),
+                         FIRMWARE_BUILDTIME_SIZE);
+    }
+
+    printf("Dev %s, version %s, build time %s\n",
+           bios_devname[static_cast<int>(dev)].data(), version.c_str(),
+           buildTime.c_str());
 }
 
 ipmi_ret_t ipmiOemInspurAssetInfo(ipmi_netfn_t /* netfn */,
@@ -117,9 +151,9 @@ ipmi_ret_t ipmiOemInspurAssetInfo(ipmi_netfn_t /* netfn */,
     }
 
     // For now we only support BIOS type
-    printf("%s: Received BIOS info\n", __func__);
+    parseBIOSInfo(info->data);
 
-    return IPMI_CC_UNSPECIFIED_ERROR;
+    return IPMI_CC_OK;
 }
 
 void registerOEMFunctions(void)
