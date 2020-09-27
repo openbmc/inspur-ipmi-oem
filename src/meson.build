@@ -1,3 +1,7 @@
+configure_file(output: 'config.h',
+    configuration: cdata,
+)
+
 src_inc = include_directories('.')
 
 so_version = '0.1.0'

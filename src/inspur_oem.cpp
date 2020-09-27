@@ -1,4 +1,8 @@
+#include "config.h"
+
 #include "inspur_oem.hpp"
+
+#include "utils.hpp"
 
 #include <ipmid/api.h>
 
@@ -107,6 +111,11 @@ void parseBIOSInfo(const std::vector<uint8_t>& data)
     if (dev == bios_version_devname::BIOS)
     {
         buildTime.assign(reinterpret_cast<const char*>(data.data() + 16), 20);
+
+        // Set BIOS version
+        auto service = utils::getService(bus, BIOS_OBJPATH, VERSION_IFACE);
+        utils::setProperty(bus, service.c_str(), BIOS_OBJPATH, VERSION_IFACE,
+                           VERSION, version);
     }
 
     printf("Dev %s, version %s, build time %s\n",

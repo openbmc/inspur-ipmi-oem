@@ -1,0 +1,5 @@
+option('BIOS_OBJPATH',
+       type: 'string',
+       value: '/xyz/openbmc_project/software/bios_active',
+       description: 'The BIOS software Dbus object path')
+
