@@ -17,6 +17,9 @@ class UtilsInterface;
 using std::experimental::any;
 using std::experimental::any_cast;
 
+using ValueType =
+    std::variant<bool, uint8_t, int16_t, uint16_t, int32_t, uint32_t, int64_t,
+                 uint64_t, double, std::string>;
 /**
  * @brief Get the implementation of UtilsInterface
  */
@@ -58,6 +61,11 @@ template <typename T>
 T getProperty(sdbusplus::bus::bus& bus, const char* service, const char* path,
               const char* interface, const char* propertyName);
 
+template <typename T>
+void setProperty(sdbusplus::bus::bus& bus, const char* service,
+                 const char* path, const char* interface,
+                 const char* propertyName, const T& value);
+
 /**
  * @brief The interface for utils
  */
@@ -80,6 +88,11 @@ class UtilsInterface
                                 const char* path, const char* interface,
                                 const char* propertyName) const = 0;
 
+    virtual void setPropertyImpl(sdbusplus::bus::bus& bus, const char* service,
+                                 const char* path, const char* interface,
+                                 const char* propertyName,
+                                 ValueType&& value) const = 0;
+
     template <typename T>
     T getProperty(sdbusplus::bus::bus& bus, const char* service,
                   const char* path, const char* interface,
@@ -89,6 +102,16 @@ class UtilsInterface
             getPropertyImpl(bus, service, path, interface, propertyName);
         auto value = any_cast<PropertyType>(result);
         return std::get<T>(value);
+    }
+
+    template <typename T>
+    void setProperty(sdbusplus::bus::bus& bus, const char* service,
+                     const char* path, const char* interface,
+                     const char* propertyName, const T& value) const
+    {
+        ValueType v(value);
+        setPropertyImpl(bus, service, path, interface, propertyName,
+                        std::move(v));
     }
 };
 
@@ -105,6 +128,11 @@ class Utils : public UtilsInterface
     any getPropertyImpl(sdbusplus::bus::bus& bus, const char* service,
                         const char* path, const char* interface,
                         const char* propertyName) const override;
+
+    void setPropertyImpl(sdbusplus::bus::bus& bus, const char* service,
+                         const char* path, const char* interface,
+                         const char* propertyName,
+                         ValueType&& value) const override;
 };
 
 inline std::string getService(sdbusplus::bus::bus& bus, const char* path,
@@ -126,6 +154,15 @@ T getProperty(sdbusplus::bus::bus& bus, const char* service, const char* path,
 {
     return getUtils().getProperty<T>(bus, service, path, interface,
                                      propertyName);
+}
+
+template <typename T>
+void setProperty(sdbusplus::bus::bus& bus, const char* service,
+                 const char* path, const char* interface,
+                 const char* propertyName, const T& value)
+{
+    return getUtils().setProperty<T>(bus, service, path, interface,
+                                     propertyName, value);
 }
 
 } // namespace utils
