@@ -2,12 +2,12 @@
 
 #include "inspur_oem.hpp"
 
+#include "sdbus_wrapper.hpp"
 #include "utils.hpp"
 
 #include <ipmid/api.h>
 
 #include <phosphor-logging/log.hpp>
-#include <sdbusplus/bus.hpp>
 
 #include <optional>
 
@@ -21,6 +21,7 @@ constexpr auto FIRMWARE_VERSION_SIZE = 15;
 constexpr auto FIRMWARE_BUILDTIME_OFFSET =
     FIRMWARE_VERSION_OFFSET + FIRMWARE_VERSION_SIZE;
 constexpr auto FIRMWARE_BUILDTIME_SIZE = 20;
+constexpr auto FIRMWARE_MIN_SIZE = FIRMWARE_BUILDTIME_OFFSET;
 
 static_assert(FIRMWARE_VERSION_OFFSET == 1);
 static_assert(FIRMWARE_BUILDTIME_OFFSET == 16);
@@ -35,7 +36,7 @@ using namespace phosphor::logging;
 using namespace inspur;
 
 static void registerOEMFunctions() __attribute__((constructor));
-sdbusplus::bus::bus bus(ipmid_get_sd_bus_connection());
+static auto& bus = getBus();
 
 struct ParsedAssetInfo
 {
@@ -120,6 +121,10 @@ std::optional<ParsedAssetInfo> parseAssetInfo(const AssetInfoHeader* h)
 
 void parseBIOSInfo(const std::vector<uint8_t>& data)
 {
+    if (data.size() < FIRMWARE_MIN_SIZE)
+    {
+        return;
+    }
     bios_version_devname dev = static_cast<bios_version_devname>(data[0]);
     std::string version{data.data() + FIRMWARE_VERSION_OFFSET,
                         data.data() + FIRMWARE_VERSION_SIZE};
