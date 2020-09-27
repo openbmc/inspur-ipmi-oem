@@ -1,6 +1,5 @@
 #include "utils.hpp"
 
-#include <algorithm>
 #include <phosphor-logging/log.hpp>
 
 using namespace phosphor::logging;
@@ -87,6 +86,26 @@ any Utils::getPropertyImpl(sdbusplus::bus::bus& bus, const char* service,
                         entry("INTERFACE=%s", interface),
                         entry("PROPERTY=%s", propertyName));
         throw std::runtime_error("GetProperty call failed");
+    }
+}
+
+void Utils::setPropertyImpl(sdbusplus::bus::bus& bus, const char* service,
+                            const char* path, const char* interface,
+                            const char* propertyName, ValueType&& value) const
+{
+    auto method = bus.new_method_call(service, path,
+                                      "org.freedesktop.DBus.Properties", "Set");
+    method.append(interface, propertyName, value);
+    try
+    {
+        bus.call_noreply(method);
+    }
+    catch (const sdbusplus::exception::SdBusError& ex)
+    {
+        log<level::ERR>("SetProperty call failed", entry("PATH=%s", path),
+                        entry("INTERFACE=%s", interface),
+                        entry("PROPERTY=%s", propertyName));
+        throw std::runtime_error("SetProperty call failed");
     }
 }
 
