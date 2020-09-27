@@ -1,3 +1,5 @@
+option('tests', type: 'feature', description: 'Build tests')
+
 option('BIOS_OBJPATH',
        type: 'string',
        value: '/xyz/openbmc_project/software/bios_active',
