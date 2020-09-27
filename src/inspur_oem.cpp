@@ -2,12 +2,12 @@
 
 #include "inspur_oem.hpp"
 
+#include "sdbus_wrapper.hpp"
 #include "utils.hpp"
 
 #include <ipmid/api.h>
 
 #include <phosphor-logging/log.hpp>
-#include <sdbusplus/bus.hpp>
 
 #include <optional>
 
@@ -20,7 +20,7 @@ using namespace phosphor::logging;
 using namespace inspur;
 
 static void registerOEMFunctions() __attribute__((constructor));
-sdbusplus::bus::bus bus(ipmid_get_sd_bus_connection());
+static auto& bus = getBus();
 
 struct ParsedAssetInfo
 {
@@ -105,6 +105,10 @@ std::optional<ParsedAssetInfo> parseAssetInfo(const AssetInfoHeader* h)
 
 void parseBIOSInfo(const std::vector<uint8_t>& data)
 {
+    if (data.size() < 16)
+    {
+        return;
+    }
     bios_version_devname dev = static_cast<bios_version_devname>(data[0]);
     std::string version{data.data() + 1, data.data() + 15};
     std::string buildTime;
