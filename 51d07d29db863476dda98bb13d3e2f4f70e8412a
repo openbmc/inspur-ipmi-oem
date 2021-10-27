@@ -1,0 +1,8 @@
+Ok-To-Test+1: OpenBMC CI <openbmcbump-ci@yahoo.com>
+Code-Review+2: Lei YU <yulei.sh@bytedance.com>
+Verified+1: OpenBMC CI <openbmcbump-ci@yahoo.com>
+Submitted-by: John Wang <wangzhiqiang02@inspur.com>
+Submitted-at: Wed, 27 Oct 2021 05:44:04 +0000
+Reviewed-on: https://gerrit.openbmc-project.xyz/c/openbmc/inspur-ipmi-oem/+/48324
+Project: openbmc/inspur-ipmi-oem
+Branch: refs/heads/master
