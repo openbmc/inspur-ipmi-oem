@@ -32,10 +32,10 @@
 # data within them will be kept sorted.
 
 owners:
-- wangzhiqiang02@inspur.com
 - chenqiuyi01@inspur.com
+- liuxiwei@inspur.com
 - yulei.sh@bytedance.com
-- xuxiaohan@bytedance.com
+- wangzhiqiang02@inspur.com
 
 reviewers:
 
@@ -48,12 +48,9 @@ openbmc:
 - name: John Wang
   email: wangzhiqiang02@inspur.com
   discord: wangzq
-- name: Lei Yu
-  email: yulei.sh@bytedance.com
-  discord: LeiYu
-- name: Lotus Xu
-  email: xuxiaohan@bytedance.com
-  discord: Lotus Xu
 - name: Kiuyi Chen
   email: chenqiuyi01@inspur.com
   discord:
+- name: Lei Yu
+  email: yulei.sh@bytedance.com
+  discord: LeiYu
