@@ -1,0 +1,8 @@
+Verified+1: OpenBMC CI <openbmcbump-ci@yahoo.com>
+Code-Review+1: John Wang <wangzhiqiang02@inspur.com>
+Code-Review+2: Lei YU <yulei.sh@bytedance.com>
+Submitted-by: George Liu <liuxiwei@inspur.com>
+Submitted-at: Wed, 02 Nov 2022 05:34:58 +0000
+Reviewed-on: https://gerrit.openbmc.org/c/openbmc/inspur-ipmi-oem/+/58330
+Project: openbmc/inspur-ipmi-oem
+Branch: refs/heads/master
