@@ -22,9 +22,9 @@ endif
 test_deps = [
     gtest_dep,
     gmock_dep,
-    phosphor_logging,
-    phosphor_dbus_interfaces,
-    sdbusplus,
+    phosphor_logging_dep,
+    phosphor_dbus_interfaces_dep,
+    sdbusplus_dep,
 ]
 
 test_sources = [

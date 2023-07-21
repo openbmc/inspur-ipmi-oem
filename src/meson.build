@@ -5,9 +5,9 @@ sources = [
 ]
 
 deps = [
-    libipmid,
-    phosphor_dbus_interfaces,
-    phosphor_logging,
+    ipmid_dep,
+    phosphor_dbus_interfaces_dep,
+    phosphor_logging_dep,
 ]
 
 shared_library(

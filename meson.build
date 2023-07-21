@@ -14,10 +14,10 @@ project(
     meson_version: '>=1.1.1',
 )
 
-phosphor_dbus_interfaces = dependency('phosphor-dbus-interfaces')
-phosphor_logging = dependency('phosphor-logging')
-libipmid = dependency('libipmid')
-sdbusplus = dependency('sdbusplus')
+phosphor_dbus_interfaces_dep = dependency('phosphor-dbus-interfaces')
+phosphor_logging_dep = dependency('phosphor-logging')
+sdbusplus_dep = dependency('sdbusplus')
+ipmid_dep = dependency('libipmid')
 
 # Common configurations for src and test
 cdata = configuration_data()

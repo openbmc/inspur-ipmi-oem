@@ -1,2 +1,3 @@
-# Repo Specific Items
-build/
+build*/
+subprojects/*
+!subprojects/*.wrap
