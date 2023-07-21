@@ -1,22 +1,21 @@
-configure_file(output: 'config.h',
-    configuration: cdata,
-)
+sources = [
+    'inspur_oem.cpp',
+    'utils.cpp',
+    'sdbus_wrapper.cpp',
+]
 
-src_inc = include_directories('.')
-
-so_version = '0.1.0'
-
-shared_library(
-  'inspur-ipmi-oem',
-  'inspur_oem.cpp',
-  'utils.cpp',
-  'sdbus_wrapper.cpp',
-  dependencies: [
+deps = [
+    libipmid,
     phosphor_dbus_interfaces,
     phosphor_logging,
-    libipmid,
-  ],
-  version: so_version,
-  install: true,
-  install_dir: get_option('libdir') / 'ipmid-providers'
-  )
+]
+
+shared_library(
+    'inspur-ipmi-oem',
+    sources,
+    include_directories: ['..'],
+    dependencies: [deps],
+    version: meson.project_version(),
+    install: true,
+    install_dir: get_option('libdir') / 'ipmid-providers'
+)

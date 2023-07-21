@@ -27,7 +27,12 @@ cdata.set_quoted('BIOS_OBJPATH', get_option('BIOS_OBJPATH'))
 
 subdir('src')
 
+configure_file(
+    output: 'config.h',
+    configuration: cdata,
+)
+
 build_tests = get_option('tests')
 if not build_tests.disabled()
-  subdir('test')
+    subdir('test')
 endif
