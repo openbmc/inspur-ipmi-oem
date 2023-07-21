@@ -4,14 +4,14 @@ project(
     default_options: [
         'warning_level=3',
         'werror=true',
-        'cpp_std=c++17',
+        'cpp_std=c++23',
         'prefix=/usr',
         'b_lundef=false',
         'buildtype=debugoptimized',
     ],
     license: 'Apache-2.0',
     version: '1.0',
-    meson_version: '>=0.49.0',
+    meson_version: '>=1.1.1',
 )
 
 phosphor_dbus_interfaces = dependency('phosphor-dbus-interfaces')
