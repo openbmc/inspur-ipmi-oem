@@ -98,8 +98,8 @@ class UtilsInterface
                   const char* path, const char* interface,
                   const char* propertyName) const
     {
-        any result =
-            getPropertyImpl(bus, service, path, interface, propertyName);
+        any result = getPropertyImpl(bus, service, path, interface,
+                                     propertyName);
         auto value = any_cast<PropertyType>(result);
         return std::get<T>(value);
     }

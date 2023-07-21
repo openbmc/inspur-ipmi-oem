@@ -54,14 +54,12 @@ TEST_F(TestInspurIpmiOem, Empty)
 
 TEST_F(TestInspurIpmiOem, parseBIOSInfoEmpty)
 {
-
     EXPECT_CALL(mockedUtils, setPropertyImpl(_, _, _, _, _, _)).Times(0);
     ipmi::parseBIOSInfo({});
 }
 
 TEST_F(TestInspurIpmiOem, parseBIOSInfoValidBIOSVersion)
 {
-
     std::vector<uint8_t> data{
         0x00, 0x30, 0x31, 0x2e, 0x30, 0x31, 0x2e, 0x30, 0x31, 0x2e,
         0x30, 0x31, 0x2e, 0x30, 0x31, 0x00, 0x30, 0x38, 0x2f, 0x31,
