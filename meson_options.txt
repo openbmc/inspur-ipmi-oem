@@ -1,7 +1,10 @@
-option('tests', type: 'feature', description: 'Build tests')
+option(
+    'tests', type: 'feature',
+    description: 'Build tests'
+)
 
-option('BIOS_OBJPATH',
-       type: 'string',
-       value: '/xyz/openbmc_project/software/bios_active',
-       description: 'The BIOS software Dbus object path')
-
+option(
+    'BIOS_OBJPATH', type: 'string',
+    value: '/xyz/openbmc_project/software/bios_active',
+    description: 'The BIOS software Dbus object path'
+)
