@@ -43,13 +43,13 @@ matches:
 
 openbmc:
 - name: George Liu
-  email: liuxiwei@inspur.com
+  email: liuxiwei@ieisystem.com
   discord: George Liu
 - name: John Wang
-  email: wangzhiqiang02@inspur.com
+  email: wangzhiqiang02@ieisystem.com
   discord: wangzq
 - name: Kiuyi Chen
-  email: chenqiuyi01@inspur.com
+  email: chenqiuyi01@ieisystem.com
   discord:
 - name: Lei Yu
   email: yulei.sh@bytedance.com
