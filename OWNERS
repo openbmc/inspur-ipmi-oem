@@ -32,10 +32,8 @@
 # data within them will be kept sorted.
 
 owners:
-- chenqiuyi01@inspur.com
 - liuxiwei@inspur.com
 - yulei.sh@bytedance.com
-- wangzhiqiang02@inspur.com
 
 reviewers:
 
@@ -43,14 +41,8 @@ matches:
 
 openbmc:
 - name: George Liu
-  email: liuxiwei@inspur.com
+  email: liuxiwei@ieisystem.com
   discord: George Liu
-- name: John Wang
-  email: wangzhiqiang02@inspur.com
-  discord: wangzq
-- name: Kiuyi Chen
-  email: chenqiuyi01@inspur.com
-  discord:
 - name: Lei Yu
   email: yulei.sh@bytedance.com
   discord: LeiYu
